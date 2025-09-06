@@ -5,9 +5,9 @@ from config import Config
 app = Flask(__name__, template_folder='blueprints/templates')
 app.config.from_object(Config)
 
-# Import and register the main blueprint
-from blueprints.main import bp as main_bp
+# Import and register the main blueprint directly from routes (no code in __init__.py)
+from blueprints.main.routes import bp as main_bp
 app.register_blueprint(main_bp)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍍 Good Morning Pineapple</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #ffeaa7; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; }
+        .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        .generate-btn { background: #00b894; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 10px; cursor: pointer; margin: 1rem 0; }
+        .generate-btn:hover { transform: scale(1.05); }
+        .result-card { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1rem; text-align: center; }
+        .quote-text { font-style: italic; color: #333; font-size: 1.1rem; margin: 1rem 0; }
+        .image-placeholder { width: 100%; max-width: 500px; height: 300px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 1rem auto; color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('main.index') }}" class="back-btn">← Back to Home</a>
+        <h1>🍍 Good Morning Pineapple</h1>
+        <p>Generate those classic WhatsApp family group good morning messages! 😂</p>
+        
+        <button class="generate-btn" onclick="generateWish()">🌅 Generate Cringe-worthy Good Morning</button>
+        
+        <div id="result" style="display: none;">
+            <div class="result-card">
+                <div class="quote-text" id="quote-display"></div>
+                <div class="image-placeholder" id="image-container">🌺 Beautiful Image Loading... 🌺</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Classic WhatsApp family group quotes
+        const familyQuotes = [
+            "🌅 Good Morning! Life is like a cup of tea... it's all about how you make it! ☕✨",
+            "🌞 Rise and shine! Remember: You're never too old to set new goals! 💪🎯",
+            "🌸 Good Morning dear! May your coffee be strong and your Monday be short! ☕😊",
+            "🌺 A beautiful day begins with a beautiful mindset! Think positive! 🌈💭",
+            "🌻 Good Morning! Don't count the days, make the days count! 📅✨",
+            "🌹 Every morning is a fresh start! Yesterday is history, tomorrow is mystery! 🔮⏰",
+            "🌷 Good Morning! Life is 10% what happens to you and 90% how you react! 😄💯"
+        ];
+
+        function generateWish() {
+            const randomQuote = familyQuotes[Math.floor(Math.random() * familyQuotes.length)];
+            
+            document.getElementById('quote-display').textContent = randomQuote;
+            document.getElementById('result').style.display = 'block';
+            
+            // Add some WhatsApp-style animations
+            document.getElementById('image-container').style.background = `linear-gradient(45deg, hsl(${Math.random()*360}, 70%, 60%), hsl(${Math.random()*360}, 70%, 60%))`;
+        }
+    </script>
+</body>
+</html>

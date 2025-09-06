@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gharelu Jugaad Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 600px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-color: #667eea;
+        }
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .feature-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Gharelu Jugaad Hub</h1>
+        <p class="subtitle">Your one-stop solution for everyday home hacks!</p>
+        
+        <div class="features">
+            <a href="{{ url_for('main.good_morning_pineapple') }}" class="feature-card">
+                <div class="feature-icon">🍍</div>
+                <div class="feature-title">Good Morning Pineapple</div>
+                <div class="feature-desc">Start your day with motivational quotes and beautiful images</div>
+            </a>
+            
+            <a href="{{ url_for('main.mummy_i_want_pizza_at_home') }}" class="feature-card">
+                <div class="feature-icon">🍕</div>
+                <div class="feature-title">Mummy I Want Pizza at Home</div>
+                <div class="feature-desc">Find recipes based on ingredients you have at home</div>
+            </a>
+            
+            <a href="{{ url_for('main.papa_ki_unpaid_internship') }}" class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <div class="feature-title">Papa Ki Unpaid Internship</div>
+                <div class="feature-desc">Get YouTube tutorials for fixing household items</div>
+            </a>
+            
+            <a href="{{ url_for('main.better_call_jethalal') }}" class="feature-card">
+                <div class="feature-icon">🧮</div>
+                <div class="feature-title">Better Call Jethalal</div>
+                <div class="feature-desc">Simple calculator for everyday calculations</div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
