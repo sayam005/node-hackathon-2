@@ -2,7 +2,8 @@ from flask import render_template, request, jsonify, Blueprint
 import random
 import urllib.parse
 
-bp = Blueprint('papa', __name__, url_prefix='/papa')
+# CREATE BLUEPRINT with correct name
+bp = Blueprint('papa_ki_unpaid_internship', __name__, url_prefix='/papa-ki-unpaid-internship')
 
 @bp.route('/')
 def index():
@@ -159,7 +160,7 @@ def generate_funny_task(category, difficulty):
             '🔧 घर के सभी loose screws tight करो',
             '🚪 सभी door handles और locks की functioning check करो',
             '💡 सभी bulbs working हैं कि नहीं test करो',
-            '🔌 सभी electrical connections check करके loose plugs fix करو',
+            '🔌 सभी electrical connections check करके loose plugs fix करो',
             '🪟 Windows के hinges में oil लगाओ',
             '🚿 Taps की leakage check करके minor fixes करो'
         ],
@@ -200,7 +201,7 @@ def get_papa_comment(task):
         'Wah beta! Ye task perfect है आज के लिए. Papa proud होंगे! 👏',
         'Shabash! Iss task से घर और भी beautiful हो जाएगा! ✨',
         'Good choice! Papa के जमाने में यही सब tasks करके हमने सब kuch सीखा था! 💪',
-        'Excellent! Task complete करने के बाद treat milegi! 🍫',
+        'Excellent! Task complete करने के बाद treat mileगी! 🍫',
         'Perfect timing! Ye task करने से बहुत satisfaction मिलेगा! 😊',
         'Bahut achha! Mummy बहुत खुश होंगी जब देखेंगी! 🥰',
         'Smart choice! Aise small tasks से big difference होता है! 🌟',
