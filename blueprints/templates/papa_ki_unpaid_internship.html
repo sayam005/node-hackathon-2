@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papa Ki Unpaid Internship - DIY Household Hub 🔧</title>
+    <title>Harry Nohara's Average Sunday - Desi Household Jugaad Hub 🏠</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
         }
@@ -37,7 +37,7 @@
             color: white;
         }
         .feature-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             color: white;
             border-radius: 15px;
             padding: 30px;
@@ -50,7 +50,7 @@
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
-        .papa-wisdom {
+        .harry-wisdom {
             background: linear-gradient(45deg, #FFE082, #FFCC02);
             border-radius: 15px;
             padding: 25px;
@@ -60,15 +60,28 @@
             font-weight: bold;
         }
         .stats-container {
-            background: rgba(102, 126, 234, 0.1);
+            background: rgba(255, 154, 158, 0.1);
             border-radius: 15px;
             padding: 20px;
             margin: 20px 0;
         }
+        .desi-accent {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
-    <a href="{{ url_for('mummy_pizza.index') }}" class="home-btn">
+    <a href="{{ url_for('main.index') }}" class="home-btn">
         <i class="fas fa-home"></i> Home
     </a>
 
@@ -76,11 +89,11 @@
         <div class="main-hub">
             <!-- Header -->
             <div class="text-center mb-4">
-                <h1><i class="fas fa-tools"></i> Papa Ki Unpaid Internship</h1>
-                <p class="lead text-muted">DIY Solutions + Fun Family Tasks = Happy Home! 🏠</p>
-                <div class="papa-wisdom">
-                    <h5>👨‍🔧 Papa Ka Motto:</h5>
-                    <p class="mb-0">"Beta, agar kaam aata hai toh Papa बनके दिखाना पड़ेगा! DIY spirit develop करो!" 💪</p>
+                <h1><i class="fas fa-home"></i> Harry Nohara's Average Sunday</h1>
+                <p class="lead text-muted">Ghar ki Jugaad + Family Entertainment = Perfect Weekend! 🎉</p>
+                <div class="harry-wisdom">
+                    <h5>👨‍💼 Harry Ka Sunday Mantra:</h5>
+                    <p class="mb-0">"Sunday ko productive hona hai, lekin family time bhi chahiye! Balance is key!" 😊</p>
                 </div>
             </div>
 
@@ -88,90 +101,99 @@
             <div class="stats-container">
                 <div class="row text-center">
                     <div class="col-md-3">
-                        <h3>🎯 50+</h3>
-                        <p>Fun Family Tasks</p>
+                        <h3>🎯 75+</h3>
+                        <p>Weekend Activities</p>
                     </div>
                     <div class="col-md-3">
-                        <h3>🔧 100+</h3>
-                        <p>DIY Solutions</p>
+                        <h3>🔧 50+</h3>
+                        <p>Quick Household Fixes</p>
                     </div>
                     <div class="col-md-3">
-                        <h3>📹 200+</h3>
-                        <p>Tutorial Links</p>
+                        <h3>💡 100+</h3>
+                        <p>Desi Jugaad Solutions</p>
                     </div>
                     <div class="col-md-3">
-                        <h3>💰 ₹1000s</h3>
-                        <p>Money Saved</p>
+                        <h3>😄 24/7</h3>
+                        <p>Family Entertainment</p>
                     </div>
                 </div>
             </div>
 
             <!-- Main Features -->
             <div class="row">
-                <!-- Task Generator -->
+                <!-- Weekend Timer Killer -->
                 <div class="col-md-6">
-                    <div class="feature-card text-center" onclick="window.location.href='{{ url_for('papa_ki_unpaid_internship.task_generator') }}'">
-                        <i class="fas fa-tasks" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                        <h3>🎯 Family Task Generator</h3>
-                        <p class="mb-3">Fun household tasks for the whole family! No more "Mummy, main bore ho raha hun!" 😄</p>
-                        <div class="alert alert-light">
-                            <small><strong>Features:</strong><br>
-                            ✅ 6 Categories of tasks<br>
-                            ✅ Difficulty levels<br>
-                            ✅ Papa's encouraging comments<br>
-                            ✅ Completion rewards system</small>
+                    <div class="feature-card text-center" onclick="window.location.href='{{ url_for('papa_ki_unpaid_internship.task_generator') }}';">
+                        <i class="fas fa-clock" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3>⏰ Weekend Timer Killer</h3>
+                        <p class="mb-3">Boring Sunday? Family ko busy rakhne ke fun activities! "Aaj kya karte hain?" ka perfect answer! 🎮</p>
+                        <div class="desi-accent">
+                            <small><strong>What's Inside:</strong><br>
+                            🎯 Family bonding games<br>
+                            🏠 Productive household tasks<br>
+                            🎨 Creative projects<br>
+                            🍳 Kitchen experiments</small>
                         </div>
                         <button class="btn btn-light btn-lg">
-                            <i class="fas fa-play"></i> Start Task Generation
+                            <i class="fas fa-play"></i> Kill Some Time!
                         </button>
                     </div>
                 </div>
 
-                <!-- Problem Solver -->
+                <!-- Harry's Emergency Toolkit -->
                 <div class="col-md-6">
-                    <div class="feature-card text-center" onclick="window.location.href='{{ url_for('papa_ki_unpaid_internship.problem_solver') }}'">
-                        <i class="fas fa-wrench" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                        <h3>🔧 DIY Problem Solver</h3>
-                        <p class="mb-3">Ghar ki problems solve करो बिना mechanic के! "Papa, ye fix karo!" ka solution! 🛠️</p>
-                        <div class="alert alert-light">
-                            <small><strong>Features:</strong><br>
-                            ✅ Step-by-step solutions<br>
-                            ✅ Safety tips included<br>
-                            ✅ YouTube tutorials<br>
-                            ✅ When to call expert advice</small>
+                    <div class="feature-card text-center" onclick="window.location.href='{{ url_for('papa_ki_unpaid_internship.problem_solver') }}';">
+                        <i class="fas fa-toolbox" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                        <h3>🔧 Harry's Emergency Toolkit</h3>
+                        <p class="mb-3">Ghar mein kuch toota? Paani leak? Light nahi jal rahi? Desi jugaad solutions ready! 🛠️</p>
+                        <div class="desi-accent">
+                            <small><strong>Crisis Management:</strong><br>
+                            ⚡ Electrical quick fixes<br>
+                            💧 Plumbing emergencies<br>
+                            📱 Tech troubleshooting<br>
+                            🚪 Mechanical repairs</small>
                         </div>
                         <button class="btn btn-light btn-lg">
-                            <i class="fas fa-search"></i> Solve Problems
+                            <i class="fas fa-wrench"></i> Fix It Now!
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Papa's Wisdom Section -->
-            <div class="papa-wisdom mt-4">
-                <h5><i class="fas fa-lightbulb"></i> Today's Papa Wisdom:</h5>
-                <p class="mb-0">"सबसे बड़ा tool है patience, सबसे important skill है सीखने की इच्छा! YouTube University से कुछ भी सीख सकते हो!" 🎓</p>
+            <!-- Harry's Sunday Wisdom -->
+            <div class="harry-wisdom mt-4">
+                <h5><i class="fas fa-lightbulb"></i> Harry's Sunday Wisdom:</h5>
+                <p class="mb-0">"Sunday successful tabhi hai jab family khush ho, ghar clean ho, aur emergency mein kuch toot na jaye!" 🏆</p>
             </div>
 
-            <!-- Quick Tips -->
+            <!-- Desi Household Quick Facts -->
             <div class="row mt-4">
                 <div class="col-md-4">
                     <div class="alert alert-info text-center">
-                        <h6><i class="fas fa-shield-alt"></i> Safety First</h6>
-                        <small>Electrical work में हमेशा main switch off करो!</small>
+                        <h6><i class="fas fa-clock"></i> Time Management</h6>
+                        <small>Weekend activities 15 min se 3 hours tak!</small>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="alert alert-success text-center">
-                        <h6><i class="fas fa-money-bill-wave"></i> Money Saving</h6>
-                        <small>DIY से 60-80% repair cost बच जाता है!</small>
+                        <h6><i class="fas fa-rupee-sign"></i> Budget Friendly</h6>
+                        <small>Ghar mein available items se maximum fun!</small>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="alert alert-warning text-center">
-                        <h6><i class="fas fa-graduation-cap"></i> Learning</h6>
-                        <small>Har problem एक नया skill सिखाती है!</small>
+                        <h6><i class="fas fa-users"></i> Family Bonding</h6>
+                        <small>Sabke saath milke kaam, double maza!</small>
                     </div>
+                </div>
+            </div>
+
+            <!-- Today's Special -->
+            <div class="text-center mt-4">
+                <div class="alert alert-primary">
+                    <h5>🌟 Today's Special Recommendation:</h5>
+                    <p class="mb-2"><strong>"Family Photo Album Cleanup"</strong> - Purane photos organize karo, memories refresh karo!</p>
+                    <small>⏱️ 45 minutes | 👨‍👩‍👧‍👦 Whole family | 😊 Nostalgia guaranteed!</small>
                 </div>
             </div>
         </div>
@@ -188,18 +210,6 @@
                 el.style.transform = 'translateY(20px)';
             });
         });
-
-        // CSS animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInUp {
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>

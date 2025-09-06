@@ -69,14 +69,17 @@
                 <div class="quick-btn" onclick="quickTask('बच्चे', 'boring', '30')">
                     😴 बच्चे को boring task दो
                 </div>
-                <div class="quick-btn" onclick="quickTask('बच्चे', 'energetic', '45')">
+                <div class="quick-btn" onclick="quickTask('kids', 'energetic', '30-60')">
                     ⚡ बच्चे की energy burn करो
                 </div>
-                <div class="quick-btn" onclick="quickTask('Wife', 'masti', '60')">
-                    🎉 Wife के साथ मस्ती करो
+                <div class="quick-btn" onclick="quickTask('teenagers', 'productive', '1-2')">
+                    📱 Teenagers को productive बनाओ
                 </div>
-                <div class="quick-btn" onclick="quickTask('मम्मी', 'boring', '30')">
-                    👵 मम्मी को productive task दो
+                <div class="quick-btn" onclick="quickTask('everyone', 'fun', '30-60')">
+                    🎉 Family के साथ मस्ती करो
+                </div>
+                <div class="quick-btn" onclick="quickTask('adults', 'lazy', '15-30')">
+                    😴 आराम से कुछ करो
                 </div>
             </div>
         </div>
@@ -141,13 +144,15 @@
                 const response = await fetch('/papa-ki-unpaid-internship/api/task-categories');
                 const data = await response.json();
                 
+                console.log('Loaded data:', data); // Debug log
+                
                 // Populate person select
                 const personSelect = document.getElementById('personSelect');
-                data.person_types.forEach(person => {
+                data.family_members.forEach(member => {
                     const option = document.createElement('option');
-                    option.value = person.value;
-                    option.textContent = person.label;
-                    option.title = person.description;
+                    option.value = member.value;
+                    option.textContent = member.label;
+                    option.title = member.description;
                     personSelect.appendChild(option);
                 });
 
@@ -172,6 +177,7 @@
 
             } catch (error) {
                 console.error('Error loading categories:', error);
+                alert('Categories load नहीं हो रहे! Server check करो!');
             }
         }
 
@@ -183,11 +189,11 @@
         }
 
         async function generateTask() {
-            const person = document.getElementById('personSelect').value;
+            const family_member = document.getElementById('personSelect').value;
             const mood = document.getElementById('moodSelect').value;
-            const time = document.getElementById('timeSelect').value;
+            const time_available = document.getElementById('timeSelect').value;
 
-            if (!person || !mood || !time) {
+            if (!family_member || !mood || !time_available) {
                 alert('सभी options select करो पहले!');
                 return;
             }
@@ -203,9 +209,9 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        person: person,
+                        family_member: family_member,
                         mood: mood,
-                        time: time
+                        time_available: time_available
                     })
                 });
 
@@ -228,14 +234,14 @@
             const task = data.task;
 
             // Update task display
-            document.getElementById('taskTitle').textContent = task.task;
+            document.getElementById('taskTitle').textContent = task.title;
             document.getElementById('taskDescription').textContent = task.description;
-            document.getElementById('taskTime').textContent = task.estimated_time;
-            document.getElementById('taskDifficulty').textContent = task.difficulty;
-            document.getElementById('taskReward').textContent = task.reward;
+            document.getElementById('taskTime').textContent = task.time_note || 'As per activity';
+            document.getElementById('taskDifficulty').textContent = 'Family Friendly';
+            document.getElementById('taskReward').textContent = task.bonus || 'Family fun!';
             document.getElementById('taskFun').textContent = task.fun_factor;
-            document.getElementById('tricksText').textContent = task.papa_tricks || 'बस धैर्य रखो और मज़े करो!';
-            document.getElementById('papaCommentText').textContent = data.papa_comment;
+            document.getElementById('tricksText').textContent = task.items_needed;
+            document.getElementById('papaCommentText').textContent = data.harry_comment;
 
             // Show result
             document.getElementById('taskResult').style.display = 'block';
