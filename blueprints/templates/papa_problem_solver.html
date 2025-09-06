@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Papa's Problem Solver</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 2rem; 
+            background: linear-gradient(135deg, #c0392b, #e74c3c); 
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        }
+        .back-btn { 
+            display: inline-block; 
+            padding: 0.5rem 1rem; 
+            background: #c0392b; 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            margin-bottom: 1rem; 
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 2rem; 
+        }
+        .header h1 { 
+            color: #c0392b; 
+            font-size: 2.5rem; 
+            margin-bottom: 0.5rem; 
+        }
+        .header p { 
+            color: #666; 
+            font-size: 1.2rem; 
+        }
+        
+        .input-section { 
+            background: #f8f9fa; 
+            padding: 2rem; 
+            border-radius: 10px; 
+            margin-bottom: 2rem; 
+        }
+        .form-group { 
+            margin-bottom: 1.5rem; 
+        }
+        .form-group label { 
+            display: block; 
+            margin-bottom: 0.5rem; 
+            font-weight: bold; 
+            color: #2c3e50; 
+        }
+        .form-group input, .form-group select { 
+            width: 100%; 
+            padding: 1rem; 
+            border: 2px solid #ddd; 
+            border-radius: 8px; 
+            font-size: 1rem; 
+        }
+        .form-group input:focus, .form-group select:focus { 
+            outline: none; 
+            border-color: #c0392b; 
+        }
+        
+        .solve-btn { 
+            background: linear-gradient(135deg, #c0392b, #e74c3c); 
+            color: white; 
+            padding: 1rem 2rem; 
+            border: none; 
+            border-radius: 25px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            width: 100%; 
+        }
+        .solve-btn:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+        }
+        
+        .common-problems { 
+            margin-top: 2rem; 
+        }
+        .common-problems h3 { 
+            color: #2c3e50; 
+            margin-bottom: 1rem; 
+        }
+        .problem-chips { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 0.5rem; 
+        }
+        .problem-chip { 
+            background: #ecf0f1; 
+            color: #2c3e50; 
+            padding: 0.5rem 1rem; 
+            border-radius: 20px; 
+            cursor: pointer; 
+            transition: all 0.3s; 
+            font-size: 0.9rem; 
+        }
+        .problem-chip:hover { 
+            background: #c0392b; 
+            color: white; 
+        }
+        
+        .loading { 
+            display: none; 
+            text-align: center; 
+            padding: 2rem; 
+            color: #666; 
+        }
+        
+        .solution-container { 
+            display: none; 
+            margin-top: 2rem; 
+        }
+        
+        .solution-section { 
+            background: #f8f9fa; 
+            border-left: 4px solid #c0392b; 
+            padding: 1.5rem; 
+            margin-bottom: 1.5rem; 
+            border-radius: 0 8px 8px 0; 
+        }
+        .solution-section h4 { 
+            color: #c0392b; 
+            margin-top: 0; 
+            font-size: 1.3rem; 
+        }
+        .solution-section ul { 
+            margin: 0; 
+            padding-left: 1.5rem; 
+        }
+        .solution-section li { 
+            margin-bottom: 0.5rem; 
+            line-height: 1.6; 
+        }
+        
+        .papa-advice { 
+            background: linear-gradient(135deg, #f39c12, #e67e22); 
+            color: white; 
+            padding: 1.5rem; 
+            border-radius: 10px; 
+            margin: 1.5rem 0; 
+            font-style: italic; 
+        }
+        .papa-advice h4 { 
+            margin-top: 0; 
+            display: flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+        }
+        
+        .youtube-tutorials { 
+            background: #fff; 
+            border: 2px solid #ff0000; 
+            border-radius: 10px; 
+            padding: 1.5rem; 
+            margin: 1.5rem 0; 
+        }
+        .youtube-tutorials h4 { 
+            color: #ff0000; 
+            margin-top: 0; 
+        }
+        .tutorial-item { 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            padding: 1rem; 
+            margin-bottom: 1rem; 
+            transition: all 0.3s; 
+        }
+        .tutorial-item:hover { 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        .tutorial-item a { 
+            color: #ff0000; 
+            text-decoration: none; 
+            font-weight: bold; 
+        }
+        .tutorial-item a:hover { 
+            text-decoration: underline; 
+        }
+        
+        .info-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 1rem; 
+            margin: 1.5rem 0; 
+        }
+        .info-card { 
+            background: white; 
+            border: 2px solid #ecf0f1; 
+            border-radius: 8px; 
+            padding: 1rem; 
+            text-align: center; 
+        }
+        .info-card h5 { 
+            color: #c0392b; 
+            margin-top: 0; 
+        }
+        
+        .error-message { 
+            background: #e74c3c; 
+            color: white; 
+            padding: 1rem; 
+            border-radius: 8px; 
+            margin-top: 1rem; 
+            display: none; 
+        }
+        
+        @media (max-width: 768px) {
+            .container { 
+                padding: 1rem; 
+            }
+            .header h1 { 
+                font-size: 2rem; 
+            }
+            .problem-chips { 
+                flex-direction: column; 
+            }
+            .info-grid { 
+                grid-template-columns: 1fr; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('papa.index') }}" class="back-btn">← Back to Papa Ki Internship</a>
+        
+        <div class="header">
+            <h1>🔧 Papa's Problem Solver</h1>
+            <p><strong>"Papa Fix Karo!"</strong> - Household Problems का Complete Solution</p>
+        </div>
+
+        <div class="input-section">
+            <form id="problemForm">
+                <div class="form-group">
+                    <label for="problem">🔍 Problem क्या है? (Detail में बताएं)</label>
+                    <input type="text" id="problem" name="problem" 
+                           placeholder="जैसे: Fan नहीं चल रहा है, आवाज आ रही है लेकिन हवा नहीं आ रही" 
+                           required>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="urgency">⏰ कितनी Emergency है?</label>
+                        <select id="urgency" name="urgency">
+                            <option value="normal">Normal - कल भी चल जाएगा</option>
+                            <option value="high">High - आज ही fix करना है</option>
+                            <option value="emergency">Emergency - अभी तुरंत!</option>
+                            <option value="low">Low - जब फुर्सत मिले</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">📂 Problem Category (Auto-detect होगा)</label>
+                        <select id="category" name="category">
+                            <option value="general">General / Other</option>
+                            <option value="electrical">⚡ Electrical</option>
+                            <option value="plumbing">🚿 Plumbing</option>
+                            <option value="tech">📱 Tech / WiFi</option>
+                            <option value="appliances">❄️ Appliances</option>
+                            <option value="furniture">🪑 Furniture</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="solve-btn">🔍 Papa से Solution मांगो!</button>
+            </form>
+            
+            <div class="common-problems">
+                <h3>🔥 Common Problems (Quick Click करो):</h3>
+                <div class="problem-chips" id="commonProblems">
+                    <!-- Common problems will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <h3>🔧 Papa solution ढूंढ रहे हैं...</h3>
+            <p>Thoda wait करो, comprehensive solution आ रहा है! 💪</p>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            <!-- Error messages will appear here -->
+        </div>
+
+        <div class="solution-container" id="solutionContainer">
+            <!-- Solution will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Load common problems on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCommonProblems();
+        });
+
+        // Problem form submission
+        document.getElementById('problemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            solveProblem();
+        });
+
+        function loadCommonProblems() {
+            fetch('/papa/api/common-problems')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('commonProblems');
+                    container.innerHTML = '';
+                    
+                    data.common_problems.forEach(problem => {
+                        const chip = document.createElement('div');
+                        chip.className = 'problem-chip';
+                        chip.textContent = problem.problem;
+                        chip.onclick = () => selectCommonProblem(problem.problem, problem.category, problem.urgency);
+                        container.appendChild(chip);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading common problems:', error);
+                });
+        }
+
+        function selectCommonProblem(problem, category, urgency) {
+            document.getElementById('problem').value = problem;
+            document.getElementById('category').value = category;
+            document.getElementById('urgency').value = urgency;
+            solveProblem();
+        }
+
+        function solveProblem() {
+            const form = document.getElementById('problemForm');
+            const formData = new FormData(form);
+            
+            const data = {
+                problem: formData.get('problem'),
+                urgency: formData.get('urgency'),
+                category: formData.get('category')
+            };
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('solutionContainer').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            fetch('/papa/api/solve-problem', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById('loading').style.display = 'none';
+                
+                if (result.success) {
+                    displaySolution(result);
+                } else {
+                    showError(result.error);
+                }
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                showError('कुछ technical problem हो गई है! Try करके देखो फिर से।');
+                console.error('Error:', error);
+            });
+        }
+
+        function displaySolution(solution) {
+            const container = document.getElementById('solutionContainer');
+            
+            container.innerHTML = `
+                <h2>🎯 Solution: "${solution.problem}"</h2>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h5>⏰ Estimated Time</h5>
+                        <p>${solution.estimated_time}</p>
+                    </div>
+                    <div class="info-card">
+                        <h5>🎯 Difficulty Level</h5>
+                        <p>${solution.difficulty}</p>
+                    </div>
+                    <div class="info-card">
+                        <h5>📂 Category</h5>
+                        <p>${solution.category}</p>
+                    </div>
+                    <div class="info-card">
+                        <h5>⚡ Urgency</h5>
+                        <p>${solution.urgency}</p>
+                    </div>
+                </div>
+
+                <div class="solution-section">
+                    <h4>🔍 Quick Checks (पहले ये try करो)</h4>
+                    <ul>
+                        ${solution.solutions.quick_check.map(check => `<li>${check}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="solution-section">
+                    <h4>🛠️ DIY Steps (Step by Step करो)</h4>
+                    <ul>
+                        ${solution.solutions.diy_steps.map(step => `<li>${step}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="solution-section">
+                    <h4>⚠️ Safety Tips (बहुत Important!)</h4>
+                    <ul>
+                        ${solution.solutions.safety_tips.map(tip => `<li>${tip}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="papa-advice">
+                    <h4>👨‍💼 Papa का Special Advice</h4>
+                    <p>${solution.papa_advice}</p>
+                </div>
+
+                <div class="youtube-tutorials">
+                    <h4>🎥 YouTube Tutorials (Hindi में सीखो)</h4>
+                    ${solution.youtube_tutorials.map(tutorial => `
+                        <div class="tutorial-item">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <a href="${tutorial.search_link}" target="_blank">${tutorial.title}</a>
+                                    <p style="margin: 0.5rem 0 0 0; color: #666; font-size: 0.9rem;">
+                                        ${tutorial.description} • ${tutorial.estimated_duration} • 
+                                        Papa Rating: ${tutorial.papa_rating}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="solution-section">
+                    <h4>🔧 Tools Needed (ये saamaan chahiye)</h4>
+                    <ul>
+                        ${solution.tools_needed.map(tool => `<li>${tool}</li>`).join('')}
+                    </ul>
+                </div>
+
+                <div class="solution-section" style="background: #fff3cd; border-left-color: #ffc107;">
+                    <h4 style="color: #856404;">🚨 When to Call Expert</h4>
+                    <p style="color: #856404; font-weight: bold;">${solution.solutions.when_to_call_expert}</p>
+                </div>
+            `;
+            
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

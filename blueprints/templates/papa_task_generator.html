@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Task Generator - Papa Ki Unpaid Internship</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #e67e22; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .task-form { background: #f8f9fa; padding: 2rem; border-radius: 15px; margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #2c3e50; }
+        .form-group select, .form-group input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        .form-group select:focus, .form-group input:focus { border-color: #f39c12; outline: none; }
+        .generate-btn { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .generate-btn:hover { transform: translateY(-2px); }
+        .task-result { display: none; background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; }
+        .task-card { background: white; color: #2c3e50; padding: 2rem; border-radius: 15px; margin-top: 1rem; }
+        .task-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem; color: #e74c3c; }
+        .task-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .detail-item { background: #f8f9fa; padding: 1rem; border-radius: 8px; text-align: center; }
+        .papa-comment { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 1.5rem; border-radius: 10px; margin-top: 1rem; }
+        .loading { text-align: center; padding: 2rem; display: none; }
+        .quick-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .quick-btn { background: white; border: 2px solid #f39c12; padding: 1rem; border-radius: 10px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .quick-btn:hover { background: #f39c12; color: white; }
+        .tips-section { background: #e8f5e8; padding: 1.5rem; border-radius: 10px; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('papa.index') }}" class="back-btn">← Back to Papa Hub</a>
+        
+        <div class="header">
+            <h1>🎯 Papa's Task Generator</h1>
+            <p>"बच्चे से Sunday को क्या काम करवाएं?" - Papa का ultimate solution!</p>
+        </div>
+
+        <div class="task-form">
+            <h3>🎨 अपना Perfect Task बनाओ!</h3>
+            
+            <div class="form-group">
+                <label>👤 किससे काम करवाना है?</label>
+                <select id="personSelect">
+                    <option value="">Select करो...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>😊 अभी का mood कैसा है?</label>
+                <select id="moodSelect">
+                    <option value="">Mood select करो...</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>⏰ कितना time है?</label>
+                <select id="timeSelect">
+                    <option value="">Time select करो...</option>
+                </select>
+            </div>
+
+            <button onclick="generateTask()" class="generate-btn">🎲 Task Generate करो!</button>
+
+            <div class="quick-options">
+                <h4 style="grid-column: 1 / -1;">⚡ Quick Options (Direct Click करो):</h4>
+                <div class="quick-btn" onclick="quickTask('बच्चे', 'boring', '30')">
+                    😴 बच्चे को boring task दो
+                </div>
+                <div class="quick-btn" onclick="quickTask('बच्चे', 'energetic', '45')">
+                    ⚡ बच्चे की energy burn करो
+                </div>
+                <div class="quick-btn" onclick="quickTask('Wife', 'masti', '60')">
+                    🎉 Wife के साथ मस्ती करो
+                </div>
+                <div class="quick-btn" onclick="quickTask('मम्मी', 'boring', '30')">
+                    👵 मम्मी को productive task दो
+                </div>
+            </div>
+        </div>
+
+        <div id="loadingDiv" class="loading">
+            <h3>🔄 Papa perfect task ढूंढ रहे हैं...</h3>
+        </div>
+
+        <div id="taskResult" class="task-result">
+            <h2>🎉 Papa ने Perfect Task ढूंढा है!</h2>
+            
+            <div class="task-card">
+                <div class="task-title" id="taskTitle"></div>
+                <div id="taskDescription"></div>
+                
+                <div class="task-details">
+                    <div class="detail-item">
+                        <strong>⏰ Time Needed</strong><br>
+                        <span id="taskTime"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>🎯 Difficulty</strong><br>
+                        <span id="taskDifficulty"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>🏆 Reward</strong><br>
+                        <span id="taskReward"></span>
+                    </div>
+                    <div class="detail-item">
+                        <strong>😄 Fun Factor</strong><br>
+                        <span id="taskFun"></span>
+                    </div>
+                </div>
+
+                <div id="papaTricks" class="tips-section">
+                    <h4>💡 Papa के Secret Tips:</h4>
+                    <p id="tricksText"></p>
+                </div>
+            </div>
+
+            <div class="papa-comment">
+                <h4>👨‍💼 Papa की Comment:</h4>
+                <p id="papaCommentText"></p>
+            </div>
+
+            <div style="text-align: center; margin-top: 1rem;">
+                <button onclick="generateTask()" class="generate-btn" style="width: auto; padding: 10px 20px;">
+                    🎲 Another Task Generate करो!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load options on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTaskCategories();
+        });
+
+        async function loadTaskCategories() {
+            try {
+                const response = await fetch('/papa/api/task-categories');
+                const data = await response.json();
+                
+                // Populate person select
+                const personSelect = document.getElementById('personSelect');
+                data.person_types.forEach(person => {
+                    const option = document.createElement('option');
+                    option.value = person.value;
+                    option.textContent = person.label;
+                    option.title = person.description;
+                    personSelect.appendChild(option);
+                });
+
+                // Populate mood select
+                const moodSelect = document.getElementById('moodSelect');
+                data.mood_types.forEach(mood => {
+                    const option = document.createElement('option');
+                    option.value = mood.value;
+                    option.textContent = mood.label;
+                    option.title = mood.description;
+                    moodSelect.appendChild(option);
+                });
+
+                // Populate time select
+                const timeSelect = document.getElementById('timeSelect');
+                data.time_options.forEach(time => {
+                    const option = document.createElement('option');
+                    option.value = time.value;
+                    option.textContent = time.label;
+                    timeSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        function quickTask(person, mood, time) {
+            document.getElementById('personSelect').value = person;
+            document.getElementById('moodSelect').value = mood;
+            document.getElementById('timeSelect').value = time;
+            generateTask();
+        }
+
+        async function generateTask() {
+            const person = document.getElementById('personSelect').value;
+            const mood = document.getElementById('moodSelect').value;
+            const time = document.getElementById('timeSelect').value;
+
+            if (!person || !mood || !time) {
+                alert('सभी options select करो पहले!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingDiv').style.display = 'block';
+            document.getElementById('taskResult').style.display = 'none';
+
+            try {
+                const response = await fetch('/papa/api/generate-task', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        person: person,
+                        mood: mood,
+                        time: time
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayTask(data);
+                } else {
+                    alert('Error: ' + data.error);
+                }
+
+            } catch (error) {
+                alert('कुछ गड़बड़ है भाई! ' + error);
+            } finally {
+                document.getElementById('loadingDiv').style.display = 'none';
+            }
+        }
+
+        function displayTask(data) {
+            const task = data.task;
+
+            // Update task display
+            document.getElementById('taskTitle').textContent = task.task;
+            document.getElementById('taskDescription').textContent = task.description;
+            document.getElementById('taskTime').textContent = task.estimated_time;
+            document.getElementById('taskDifficulty').textContent = task.difficulty;
+            document.getElementById('taskReward').textContent = task.reward;
+            document.getElementById('taskFun').textContent = task.fun_factor;
+            document.getElementById('tricksText').textContent = task.papa_tricks || 'बस धैर्य रखो और मज़े करो!';
+            document.getElementById('papaCommentText').textContent = data.papa_comment;
+
+            // Show result
+            document.getElementById('taskResult').style.display = 'block';
+            document.getElementById('taskResult').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
