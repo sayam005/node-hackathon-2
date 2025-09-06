@@ -21,4 +21,6 @@ def papa_ki_unpaid_internship():
 
 @bp.route('/better-call-jethalal')
 def better_call_jethalal():
-    return render_template('better_call_jethalal.html')
+    # Redirect to the jethalal blueprint
+    from flask import redirect, url_for
+    return redirect(url_for('jethalal.index'))

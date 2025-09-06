@@ -9,5 +9,9 @@ app.config.from_object(Config)
 from blueprints.main.routes import bp as main_bp
 app.register_blueprint(main_bp)
 
+# Import and register the jethalal blueprint
+from blueprints.jethalal.routes import bp as jethalal_bp
+app.register_blueprint(jethalal_bp)
+
 if __name__ == '__main__':
     app.run(debug=True)
