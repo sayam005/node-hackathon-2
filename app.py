@@ -12,5 +12,9 @@ from blueprints.good_morning_pineapple.routes import bp as good_morning_bp
 app.register_blueprint(main_bp)
 app.register_blueprint(good_morning_bp)
 
+# Import and register the jethalal blueprint
+from blueprints.jethalal.routes import bp as jethalal_bp
+app.register_blueprint(jethalal_bp)
+
 if __name__ == '__main__':
     app.run(debug=True)

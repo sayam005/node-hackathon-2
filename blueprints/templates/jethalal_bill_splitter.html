@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💸 Jethalal's Bill Splitter</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 1rem; background: linear-gradient(135deg, #a29bfe, #74b9ff); }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; color: #333; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }
+        .form-group input:focus, .form-group select:focus { border-color: #74b9ff; outline: none; }
+        .input-group { display: flex; align-items: center; }
+        .input-group input { margin-right: 10px; }
+        .input-group span { font-weight: bold; color: #666; }
+        .btn { background: #74b9ff; color: white; padding: 15px 30px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn:hover { background: #5a67d8; }
+        .result-container { background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 20px; display: none; }
+        .result-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #dee2e6; }
+        .result-item:last-child { border-bottom: none; }
+        .result-label { font-weight: bold; color: #495057; }
+        .result-value { color: #28a745; font-weight: bold; }
+        .highlight { background: #fff3cd; padding: 10px; border-radius: 5px; margin: 10px 0; border-left: 4px solid #ffc107; }
+        .error { color: #dc3545; font-size: 14px; margin-top: 5px; }
+        .jethalal-quote { text-align: center; margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 10px; font-style: italic; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{{ url_for('jethalal.index') }}" class="back-btn">← Back to Jethalal Hub</a>
+        
+        <div class="header">
+            <h1>💸 Jethalal's Bill Splitter</h1>
+            <p>Restaurant ki bill ho ya group expense, सब split कर देंगे!</p>
+        </div>
+
+        <form id="billSplitterForm">
+            <div class="form-group">
+                <label>💰 Total Bill Amount (₹)</label>
+                <input type="number" id="totalAmount" step="0.01" min="0" required placeholder="जैसे: 1200">
+                <div class="error" id="amountError"></div>
+            </div>
+
+            <div class="form-group">
+                <label>👥 Number of People</label>
+                <input type="number" id="peopleCount" min="1" max="20" required placeholder="जैसे: 4">
+                <div class="error" id="peopleError"></div>
+            </div>
+
+            <div class="form-group">
+                <label>🎯 Tip Percentage (%)</label>
+                <div class="input-group">
+                    <input type="number" id="tipPercentage" min="0" max="30" step="0.5" value="10" placeholder="10">
+                    <span>%</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>🔄 Smart Rounding (Indian Jugaad)</label>
+                <select id="roundingOption">
+                    <option value="1">No Rounding (Exact Amount)</option>
+                    <option value="5" selected>Round to nearest ₹5</option>
+                    <option value="10">Round to nearest ₹10</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn">💸 Split Bill करो!</button>
+        </form>
+
+        <div id="resultContainer" class="result-container">
+            <h3>🎉 Bill Split Result:</h3>
+            
+            <div class="result-item">
+                <span class="result-label">Original Bill:</span>
+                <span class="result-value">₹<span id="originalAmount"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Tip Amount:</span>
+                <span class="result-value">₹<span id="tipAmount"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Total with Tip:</span>
+                <span class="result-value">₹<span id="totalWithTip"></span></span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">Exact Per Person:</span>
+                <span class="result-value">₹<span id="perPersonExact"></span></span>
+            </div>
+            
+            <div class="highlight">
+                <div class="result-item">
+                    <span class="result-label">👥 Per Person (Rounded):</span>
+                    <span class="result-value" style="font-size: 20px;">₹<span id="perPersonRounded"></span></span>
+                </div>
+            </div>
+
+            <div id="extraAmountDiv" class="highlight" style="display: none;">
+                <div class="result-item">
+                    <span class="result-label">Extra Amount:</span>
+                    <span class="result-value">₹<span id="extraAmount"></span></span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Who Pays Extra:</span>
+                    <span class="result-value"><span id="whoPaysExtra"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="jethalal-quote">
+            "Bill split करने में भी jugaad चाहिए! - Jethalal Champaklal Gada" 💡
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('billSplitterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            
+            // Get form values
+            const totalAmount = parseFloat(document.getElementById('totalAmount').value);
+            const peopleCount = parseInt(document.getElementById('peopleCount').value);
+            const tipPercentage = parseFloat(document.getElementById('tipPercentage').value) || 0;
+            const roundingOption = document.getElementById('roundingOption').value;
+            
+            // Validate inputs
+            if (!totalAmount || totalAmount <= 0) {
+                document.getElementById('amountError').textContent = 'कुछ तो amount डालो भाई!';
+                return;
+            }
+            
+            if (!peopleCount || peopleCount <= 0) {
+                document.getElementById('peopleError').textContent = 'कम से कम 1 आदमी तो होना चाहिए!';
+                return;
+            }
+            
+            if (peopleCount > 20) {
+                document.getElementById('peopleError').textContent = 'इतने सारे लोग? Restaurant में जगह है?';
+                return;
+            }
+            
+            // Send request to API
+            fetch('/jethalal/api/split-bill', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    total_amount: totalAmount,
+                    people_count: peopleCount,
+                    tip_percentage: tipPercentage,
+                    rounding_option: roundingOption
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    displayResults(data);
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            })
+            .catch(error => {
+                alert('कुछ गड़बड़ है भाई! ' + error);
+            });
+        });
+
+        function displayResults(data) {
+            // Update result values
+            document.getElementById('originalAmount').textContent = data.original_amount;
+            document.getElementById('tipAmount').textContent = data.tip_amount;
+            document.getElementById('totalWithTip').textContent = data.total_with_tip;
+            document.getElementById('perPersonExact').textContent = data.per_person_exact;
+            document.getElementById('perPersonRounded').textContent = data.per_person_rounded;
+            
+            // Handle extra amount
+            if (data.extra_amount > 0) {
+                document.getElementById('extraAmount').textContent = data.extra_amount;
+                document.getElementById('whoPaysExtra').textContent = data.who_pays_extra;
+                document.getElementById('extraAmountDiv').style.display = 'block';
+            } else {
+                document.getElementById('extraAmountDiv').style.display = 'none';
+            }
+            
+            // Show results
+            document.getElementById('resultContainer').style.display = 'block';
+            document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Add some fun validation messages
+        document.getElementById('totalAmount').addEventListener('input', function() {
+            const value = parseFloat(this.value);
+            if (value > 10000) {
+                document.getElementById('amountError').textContent = 'Itna expensive restaurant? Jethalal shocked! 😱';
+            } else {
+                document.getElementById('amountError').textContent = '';
+            }
+        });
+
+        document.getElementById('peopleCount').addEventListener('input', function() {
+            const value = parseInt(this.value);
+            if (value === 1) {
+                document.getElementById('peopleError').textContent = 'Akele khana? Sad life! 😢';
+            } else if (value > 15) {
+                document.getElementById('peopleError').textContent = 'Itni badi party? Wedding hai kya? 🎉';
+            } else {
+                document.getElementById('peopleError').textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>

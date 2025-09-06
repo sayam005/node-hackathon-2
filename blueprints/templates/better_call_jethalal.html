@@ -5,17 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🧮 Better Call Jethalal</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #a29bfe; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: linear-gradient(135deg, #a29bfe, #74b9ff); }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .feature-card { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; transition: transform 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-card.primary { background: linear-gradient(135deg, #ff9933, #138808); }
+        .btn { display: inline-block; background: white; color: #6c5ce7; padding: 0.5rem 1rem; border-radius: 5px; text-decoration: none; margin-top: 1rem; font-weight: bold; }
+        .btn:hover { background: #f8f9fa; }
+        .jethalal-emoji { font-size: 3rem; margin-bottom: 1rem; }
+        .flash-messages { margin-bottom: 1rem; }
+        .alert { padding: 0.75rem 1rem; border-radius: 5px; margin-bottom: 0.5rem; }
+        .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="{{ url_for('main.index') }}" class="back-btn">← Back to Home</a>
-        <h1>🧮 Better Call Jethalal</h1>
-        <p>Quick calculator for everyday hisab-kitab!</p>
-        <p><em>Coming soon... Smart calculator!</em></p>
+        
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="header">
+            <div class="jethalal-emoji">🧮</div>
+            <h1>Better Call Jethalal</h1>
+            <p>Jethalal ke paas har hisab-kitab aur calculation ka jugaad hai!</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card primary">
+                <h3>💰 Hisab Kitab</h3>
+                <p>Kiska kitna paisa dena hai, kab tak dena hai - sab ka record Jethalal ke paas!</p>
+                <a href="{{ url_for('jethalal.hisab_kitab') }}" class="btn">Hisab Dekho</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>🧮 Smart Calculator</h3>
+                <p>Advanced calculator with Indian currency support aur memory functions</p>
+                <a href="{{ url_for('jethalal.calculator') }}" class="btn">Calculator Kholo</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>💸 Bill Splitter</h3>
+                <p>Restaurant bills, group expenses split karne ke liye Jethalal ka jugaad</p>
+                <a href="{{ url_for('jethalal.bill_splitter') }}" class="btn">Bill Split करो</a>
+            </div>
+
+            <div class="feature-card">
+                <h3>📊 EMI Calculator</h3>
+                <p>Loan EMI, interest rates calculate karne ka smartest tarika</p>
+                <a href="#" class="btn">Coming Soon</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 2rem; color: #666;">
+            <p><em>"Paisa ho ya calculation, Jethalal ke paas har problem ka solution!"</em> 💡</p>
+        </div>
     </div>
 </body>
 </html>
