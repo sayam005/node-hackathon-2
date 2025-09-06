@@ -236,7 +236,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="{{ url_for('papa.index') }}" class="back-btn">← Back to Papa Ki Internship</a>
+        <a href="{{ url_for('papa_ki_unpaid_internship.index') }}" class="back-btn">← Back to Papa Ki Internship</a>
         
         <div class="header">
             <h1>🔧 Papa's Problem Solver</h1>
@@ -314,7 +314,7 @@
         });
 
         function loadCommonProblems() {
-            fetch('/papa/api/common-problems')
+            fetch('/papa-ki-unpaid-internship/api/common-problems')
                 .then(response => response.json())
                 .then(data => {
                     const container = document.getElementById('commonProblems');
@@ -355,7 +355,7 @@
             document.getElementById('solutionContainer').style.display = 'none';
             document.getElementById('errorMessage').style.display = 'none';
 
-            fetch('/papa/api/solve-problem', {
+            fetch('/papa-ki-unpaid-internship/api/solve-problem', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

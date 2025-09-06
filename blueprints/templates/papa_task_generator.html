@@ -31,7 +31,7 @@
 </head>
 <body>
     <div class="container">
-        <a href="{{ url_for('papa.index') }}" class="back-btn">← Back to Papa Hub</a>
+        <a href="{{ url_for('papa_ki_unpaid_internship.index') }}" class="back-btn">← Back to Papa Hub</a>
         
         <div class="header">
             <h1>🎯 Papa's Task Generator</h1>
@@ -138,7 +138,7 @@
 
         async function loadTaskCategories() {
             try {
-                const response = await fetch('/papa/api/task-categories');
+                const response = await fetch('/papa-ki-unpaid-internship/api/task-categories');
                 const data = await response.json();
                 
                 // Populate person select
@@ -197,7 +197,7 @@
             document.getElementById('taskResult').style.display = 'none';
 
             try {
-                const response = await fetch('/papa/api/generate-task', {
+                const response = await fetch('/papa-ki-unpaid-internship/api/generate-task', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
