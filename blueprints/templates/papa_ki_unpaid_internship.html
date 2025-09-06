@@ -1,21 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔧 Papa Ki Unpaid Internship</title>
+    <title>�‍💼 Papa Ki Unpaid Internship</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #fab1a0; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; }
-        .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: linear-gradient(135deg, #2c3e50, #34495e); }
+        .container { max-width: 1000px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #2c3e50; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .feature-card { background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 2.5rem; border-radius: 15px; text-align: center; transition: transform 0.3s; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-card.primary { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .feature-card.secondary { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        .btn { display: inline-block; background: white; color: #2c3e50; padding: 1rem 2rem; border-radius: 25px; text-decoration: none; margin-top: 1rem; font-weight: bold; transition: all 0.3s; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="{{ url_for('main.index') }}" class="back-btn">← Back to Home</a>
-        <h1>🔧 Papa Ki Unpaid Internship</h1>
-        <p>Get YouTube tutorials for fixing household items!</p>
-        <p><em>Coming soon... DIY repair helper!</em></p>
+        
+        <div class="header">
+            <h1>👨‍💼 Papa Ki Unpaid Internship</h1>
+            <p>Papa के सारे jugaad और life skills एक जगह!</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card primary">
+                <h3>🎯 Task Generator</h3>
+                <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem;">"बच्चे से Sunday को क्या काम करवाएं?"</div>
+                <div style="font-size: 1.1rem; line-height: 1.6; margin: 1rem 0;">
+                    Family के लिए funny और productive tasks generate करो! 
+                    Time-pass + household work = Perfect combo!<br>
+                    <strong>✅ Available Now!</strong>
+                </div>
+                <a href="{{ url_for('papa.task_generator') }}" class="btn">🎲 Task Generate करो</a>
+            </div>
+
+            <div class="feature-card secondary">
+                <h3>🔧 Problem Solver</h3>
+                <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 1rem;">"Papa Fix Karo!"</div>
+                <div style="font-size: 1.1rem; line-height: 1.6; margin: 1rem 0;">
+                    Household problems के लिए step-by-step solutions और YouTube tutorials. 
+                    Papa के paas har problem ka jugaad!<br>
+                    <strong>✅ Available Now!</strong>
+                </div>
+                <a href="{{ url_for('papa.problem_solver') }}" class="btn">� Problems Fix करो</a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; color: #666;">
+            <p style="font-size: 1.2rem;"><em>"हर problem का solution, हर boring moment का entertainment - Papa के पास!"</em> 💡</p>
+            <p style="margin-top: 1rem; color: #999;">
+                <strong>Current Status:</strong> Task Generator ✅ Ready | Problem Solver ✅ Ready
+            </p>
+        </div>
     </div>
 </body>
 </html>

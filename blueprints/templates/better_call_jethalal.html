@@ -9,7 +9,7 @@
         .container { max-width: 900px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
         .header { text-align: center; margin-bottom: 2rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
         .feature-card { background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; padding: 1.5rem; border-radius: 10px; text-align: center; transition: transform 0.3s; }
         .feature-card:hover { transform: translateY(-5px); }
         .feature-card.primary { background: linear-gradient(135deg, #ff9933, #138808); }
@@ -60,12 +60,6 @@
                 <h3>💸 Bill Splitter</h3>
                 <p>Restaurant bills, group expenses split karne ke liye Jethalal ka jugaad</p>
                 <a href="{{ url_for('jethalal.bill_splitter') }}" class="btn">Bill Split करो</a>
-            </div>
-
-            <div class="feature-card">
-                <h3>📊 EMI Calculator</h3>
-                <p>Loan EMI, interest rates calculate karne ka smartest tarika</p>
-                <a href="#" class="btn">Coming Soon</a>
             </div>
         </div>
 

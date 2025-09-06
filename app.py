@@ -16,5 +16,9 @@ app.register_blueprint(good_morning_bp)
 app.register_blueprint(jethalal_bp)
 app.register_blueprint(mummy_pizza_bp)
 
+# Import and register the papa blueprint
+from blueprints.papa.routes import bp as papa_bp
+app.register_blueprint(papa_bp)
+
 if __name__ == '__main__':
     app.run(debug=True)
