@@ -8,49 +8,200 @@
         body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #ffeaa7; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 2rem; border-radius: 15px; }
         .back-btn { display: inline-block; padding: 0.5rem 1rem; background: #74b9ff; color: white; text-decoration: none; border-radius: 5px; margin-bottom: 1rem; }
-        .generate-btn { background: #00b894; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 10px; cursor: pointer; margin: 1rem 0; }
-        .generate-btn:hover { transform: scale(1.05); }
+        .category-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .category-btn { padding: 1rem; border: 2px solid #ddd; background: white; border-radius: 10px; cursor: pointer; transition: all 0.3s; text-align: center; font-size: 0.95rem; }
+        .category-btn.active { background: #00b894; color: white; border-color: #00b894; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,185,148,0.3); }
+        .category-btn:hover { border-color: #00b894; transform: translateY(-1px); }
+        .generate-btn { background: #00b894; color: white; border: none; padding: 1rem 2rem; font-size: 1.1rem; border-radius: 10px; cursor: pointer; margin: 1rem 0; transition: all 0.3s; }
+        .generate-btn:hover { transform: scale(1.05); background: #019874; }
+        .generate-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
         .result-card { background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-top: 1rem; text-align: center; }
-        .quote-text { font-style: italic; color: #333; font-size: 1.1rem; margin: 1rem 0; }
-        .image-placeholder { width: 100%; max-width: 500px; height: 300px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 1rem auto; color: white; font-weight: bold; }
+        .quote-text { font-style: italic; color: #333; font-size: 1.1rem; margin: 1rem 0; line-height: 1.5; }
+        .morning-image { width: 100%; max-width: 600px; border-radius: 10px; margin: 1rem auto; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .loading { color: #666; }
+        .category-desc { font-size: 0.8rem; color: #666; margin-top: 0.5rem; }
+        .download-btn { background: #e74c3c; color: white; border: none; padding: 0.75rem 1.5rem; font-size: 1rem; border-radius: 8px; cursor: pointer; margin: 1rem 0.5rem; transition: all 0.3s; }
+        .download-btn:hover { background: #c0392b; transform: scale(1.05); }
+        .action-buttons { margin-top: 1rem; }
+        .author-text { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
     </style>
 </head>
 <body>
     <div class="container">
         <a href="{{ url_for('main.index') }}" class="back-btn">← Back to Home</a>
         <h1>🍍 Good Morning Pineapple</h1>
-        <p>Generate those classic WhatsApp family group good morning messages! 😂</p>
+        <p>Generate WhatsApp-ready good morning messages with text overlay! Perfect for family groups! 😂📱</p>
         
-        <button class="generate-btn" onclick="generateWish()">🌅 Generate Cringe-worthy Good Morning</button>
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="desi">
+                🇮🇳 <strong>Desi Morning</strong>
+                <div class="category-desc">"Beta chai pee kar office jao"</div>
+            </button>
+            <button class="category-btn" data-category="cringe">
+                😅 <strong>Extra Cringe</strong>
+                <div class="category-desc">Maximum uncle vibes</div>
+            </button>
+            <button class="category-btn" data-category="festival">
+                🎉 <strong>Festival Wishes</strong>
+                <div class="category-desc">Diwali, Eid, Christmas & more</div>
+            </button>
+            <button class="category-btn" data-category="motivational">
+                💪 <strong>Desi Motivation</strong>
+                <div class="category-desc">"Mehnat karo, safalta milegi"</div>
+            </button>
+            <button class="category-btn" data-category="english">
+                🌟 <strong>English Quotes</strong>
+                <div class="category-desc">With famous authors</div>
+            </button>
+        </div>
+        
+        <button class="generate-btn" onclick="generateWish()" id="generateBtn">
+            🌅 Generate Good Morning Message
+        </button>
         
         <div id="result" style="display: none;">
             <div class="result-card">
                 <div class="quote-text" id="quote-display"></div>
-                <div class="image-placeholder" id="image-container">🌺 Beautiful Image Loading... 🌺</div>
+                <div class="author-text" id="author-display"></div>
+                <img id="morning-image" class="morning-image" alt="Good Morning Image" style="display: none;">
+                <div id="loading" class="loading">Creating your WhatsApp-ready image... 🎨</div>
+                
+                <div class="action-buttons" id="action-buttons" style="display: none;">
+                    <button class="download-btn" onclick="downloadImage()">📥 Download Image</button>
+                    <button class="download-btn" onclick="shareImage()" style="background: #27ae60;">📱 Share to WhatsApp</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Classic WhatsApp family group quotes
-        const familyQuotes = [
-            "🌅 Good Morning! Life is like a cup of tea... it's all about how you make it! ☕✨",
-            "🌞 Rise and shine! Remember: You're never too old to set new goals! 💪🎯",
-            "🌸 Good Morning dear! May your coffee be strong and your Monday be short! ☕😊",
-            "🌺 A beautiful day begins with a beautiful mindset! Think positive! 🌈💭",
-            "🌻 Good Morning! Don't count the days, make the days count! 📅✨",
-            "🌹 Every morning is a fresh start! Yesterday is history, tomorrow is mystery! 🔮⏰",
-            "🌷 Good Morning! Life is 10% what happens to you and 90% how you react! 😄💯"
-        ];
-
-        function generateWish() {
-            const randomQuote = familyQuotes[Math.floor(Math.random() * familyQuotes.length)];
+        let selectedCategory = 'desi';
+        let currentImageData = null;
+        
+        // Category selection
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.category-btn.active').classList.remove('active');
+                btn.classList.add('active');
+                selectedCategory = btn.dataset.category;
+                
+                // Update button text based on category
+                const generateBtn = document.getElementById('generateBtn');
+                const categoryTexts = {
+                    'desi': '🌅 Generate Desi Good Morning',
+                    'cringe': '😅 Generate Cringe Message',
+                    'festival': '🎉 Generate Festival Wish',
+                    'motivational': '💪 Generate Motivation',
+                    'english': '🌟 Generate English Quote'
+                };
+                generateBtn.textContent = categoryTexts[selectedCategory] || '🌅 Generate Message';
+            });
+        });
+        
+        async function generateWish() {
+            const btn = document.getElementById('generateBtn');
+            const result = document.getElementById('result');
+            const quoteDisplay = document.getElementById('quote-display');
+            const authorDisplay = document.getElementById('author-display');
+            const image = document.getElementById('morning-image');
+            const loading = document.getElementById('loading');
+            const actionButtons = document.getElementById('action-buttons');
             
-            document.getElementById('quote-display').textContent = randomQuote;
-            document.getElementById('result').style.display = 'block';
+            // Disable button and show loading
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = '🔄 Creating Image...';
+            result.style.display = 'block';
+            image.style.display = 'none';
+            actionButtons.style.display = 'none';
+            loading.style.display = 'block';
+            loading.textContent = 'Creating your WhatsApp-ready image... 🎨';
             
-            // Add some WhatsApp-style animations
-            document.getElementById('image-container').style.background = `linear-gradient(45deg, hsl(${Math.random()*360}, 70%, 60%), hsl(${Math.random()*360}, 70%, 60%))`;
+            try {
+                const response = await fetch(`/good-morning-pineapple/api/generate-wish?category=${selectedCategory}`);
+                const data = await response.json();
+                
+                quoteDisplay.textContent = data.quote;
+                
+                // Show author for English quotes
+                if (data.author) {
+                    authorDisplay.textContent = `— ${data.author}`;
+                    authorDisplay.style.display = 'block';
+                } else {
+                    authorDisplay.style.display = 'none';
+                }
+                
+                // Display the processed image with text overlay
+                currentImageData = data.image_data;
+                image.src = data.image_data;
+                
+                image.onload = () => {
+                    loading.style.display = 'none';
+                    image.style.display = 'block';
+                    actionButtons.style.display = 'block';
+                };
+                
+            } catch (error) {
+                console.error('Error:', error);
+                const fallbackQuotes = {
+                    'desi': '🌅 Subah ka suraj dekho aur khush raho! ☀️✨',
+                    'cringe': '🌞 Good Morning! Life is beautiful! 😊✨',
+                    'festival': '🎉 Wishing you joy and happiness! ✨🎊',
+                    'motivational': '💪 You can achieve anything! Keep going! 🔥',
+                    'english': '🌟 Every day is a new beginning. ✨'
+                };
+                quoteDisplay.textContent = fallbackQuotes[selectedCategory] || fallbackQuotes['desi'];
+                loading.textContent = 'Network error, but here\'s a quote for you! 😊';
+                authorDisplay.style.display = 'none';
+            }
+            
+            // Re-enable button
+            btn.disabled = false;
+            btn.textContent = '🌅 Generate Another One';
+        }
+        
+        function downloadImage() {
+            if (currentImageData) {
+                const link = document.createElement('a');
+                link.href = currentImageData;
+                link.download = `good-morning-${selectedCategory}-${Date.now()}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        
+        function shareImage() {
+            if (navigator.share && currentImageData) {
+                // Convert base64 to blob for sharing
+                fetch(currentImageData)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const file = new File([blob], 'good-morning.jpg', { type: 'image/jpeg' });
+                        navigator.share({
+                            title: 'Good Morning!',
+                            text: 'Check out this motivational quote!',
+                            files: [file]
+                        });
+                    })
+                    .catch(err => {
+                        // Fallback: just copy the quote text
+                        const quote = document.getElementById('quote-display').textContent;
+                        navigator.clipboard.writeText(quote).then(() => {
+                            alert('Quote copied to clipboard! You can paste it in WhatsApp and manually add the image.');
+                        });
+                    });
+            } else {
+                // Fallback for browsers without Web Share API
+                const quote = document.getElementById('quote-display').textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(quote).then(() => {
+                        alert('Quote copied to clipboard! Download the image and share both in WhatsApp.');
+                    });
+                } else {
+                    alert('Please download the image and copy the quote manually to share in WhatsApp.');
+                }
+            }
         }
     </script>
 </body>
